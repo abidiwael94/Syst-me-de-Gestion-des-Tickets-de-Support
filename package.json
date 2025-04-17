@@ -1,0 +1,26 @@
+{
+  "name": "syst-me-de-gestion-des-tickets-de-support",
+  "version": "1.0.0",
+  "description": "# Description Développer une plateforme où les utilisateurs peuvent soumettre des tickets de support technique et suivre leur résolution.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abidiwael94/Syst-me-de-Gestion-des-Tickets-de-Support.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abidiwael94/Syst-me-de-Gestion-des-Tickets-de-Support/issues"
+  },
+  "homepage": "https://github.com/abidiwael94/Syst-me-de-Gestion-des-Tickets-de-Support#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2",
+    "nodemon": "^3.1.9"
+  }
+}
