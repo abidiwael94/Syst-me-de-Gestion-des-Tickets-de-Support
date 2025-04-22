@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Modifier le Ticket</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="p-4">
+  <div class="container">
+    <h1 class="mb-4">Modifier le Ticket</h1>
+
+    <!-- Le formulaire utilise _method=PUT -->
+    <form action="/tickets/<%= ticket._id %>?_method=PUT" method="POST">
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Titre</label>
+        <input type="text" name="title" id="title" class="form-control" value="<%= ticket.title %>" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" id="description" class="form-control" required><%= ticket.description %></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="status" class="form-label">Statut</label>
+        <select name="status" id="status" class="form-select">
+          <option value="open" <%= ticket.status === 'open' ? 'selected' : '' %>>Ouvert</option>
+          <option value="in_progress" <%= ticket.status === 'in_progress' ? 'selected' : '' %>>En cours</option>
+          <option value="closed" <%= ticket.status === 'closed' ? 'selected' : '' %>>Fermé</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="assignedTo" class="form-label">Assigné à</label>
+        <select name="assignedTo" id="assignedTo" class="form-select">
+          <option value="">-- Aucun --</option>
+          <% users.forEach(user => { %>
+            <option value="<%= user._id %>" <%= ticket.assignedTo && ticket.assignedTo._id.toString() === user._id.toString() ? 'selected' : '' %>><%= user.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+      <a href="/tickets" class="btn btn-secondary">Annuler</a>
+    </form>
+  </div>
+</body>
+</html>

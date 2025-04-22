@@ -1,0 +1,29 @@
+<!-- views/tickets/new.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Créer un Ticket</title>
+</head>
+<body>
+  <h1>Créer un Nouveau Ticket</h1>
+  <form action="/tickets" method="POST">
+    <label for="title">Titre:</label>
+    <input type="text" id="title" name="title" required><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+
+    <label for="assignedTo">Attribuer à:</label>
+    <select name="assignedTo" id="assignedTo">
+      <option value="">Non attribué</option>
+      <% users.forEach(user => { %>
+        <option value="<%= user._id %>"><%= user.name %></option>
+      <% }) %>
+    </select><br>
+
+    <button type="submit">Créer le Ticket</button>
+  </form>
+  <a href="/tickets">Retour à la liste des tickets</a>
+</body>
+</html>

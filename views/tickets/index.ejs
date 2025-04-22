@@ -1,0 +1,27 @@
+<h1>Liste des tickets</h1>
+<a href="/tickets/new" class="btn btn-primary mb-3">Créer un nouveau ticket</a>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Titre</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tickets.forEach(ticket => { %>
+      <tr>
+        <td><%= ticket.title %></td>
+        <td><%= ticket.status %></td>
+        <td>
+          <a href="/tickets/edit/<%= ticket._id %>" class="btn btn-sm btn-warning">Modifier</a>
+
+          <form action="/tickets/<%= ticket._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
