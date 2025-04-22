@@ -7,11 +7,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
 
-
 dotenv.config();
+
+const connectDB = require('./config/db'); // <--- import DB
 const app = express();
 
-// Middlewares
+
+connectDB();
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // <-- essentiel pour lire les données de formulaires HTML
@@ -46,13 +49,14 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('✅ MongoDB connecté'))
-  .catch(err => console.log('❌ Erreur MongoDB :', err));
+  .catch(err => console.log('❌ Erreur MongoDB :', err)
+);
 
 // Routes
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/mailer', require('./routes/mailerRoutes'));
 app.use('/tickets', require('./routes/ticketRoutes'));
 
-// Port
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Serveur démarré sur le port ${PORT}`));
