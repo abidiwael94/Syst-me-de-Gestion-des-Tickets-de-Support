@@ -1,67 +1,129 @@
-/* Style global */
+/* Global Styles */
 body {
   background: linear-gradient(to right, #e0f7fa, #e1bee7);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
-  margin: 0;
+  animation: fadeIn 1s ease-in;
 }
 
-/* Container principal */
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container */
 .container {
   background-color: #ffffff;
-  padding: 30px 40px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-width: 480px;
   width: 100%;
+  transition: transform 0.3s ease;
 }
 
-/* Titre */
+.container:hover {
+  transform: scale(1.01);
+}
+
+/* Title */
 h2 {
   text-align: center;
   color: #6a1b9a;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
+  font-size: 30px;
+  font-weight: 700;
 }
 
-/* Champs de formulaire */
+/* Form Elements */
 .form-label {
   font-weight: 600;
+  color: #4a148c;
+  margin-bottom: 6px;
 }
 
 .form-control,
 .form-select {
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
 
-/* Bouton */
+.form-control:focus,
+.form-select:focus {
+  border-color: #6a1b9a;
+  box-shadow: 0 0 8px rgba(106, 27, 154, 0.3);
+  outline: none;
+}
+
+/* Button */
 .btn-primary {
   background-color: #6a1b9a;
   border-color: #6a1b9a;
   width: 100%;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-top: 5px;
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
   background-color: #4a148c;
+  transform: translateY(-2px);
 }
 
-/* Lien */
+/* Alert Message */
+.alert {
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+}
+
+/* Footer Link */
+p {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 15px;
+}
+
 a {
   color: #6a1b9a;
   text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
 }
 
 a:hover {
   text-decoration: underline;
+  color: #4a148c;
 }
 
-/* Message d’alerte */
-.alert {
-  text-align: center;
+/* Form Layout Utility */
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.flex-item {
+  flex: 1;
+  min-width: 220px;
 }
