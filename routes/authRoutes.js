@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
       maxAge: 3600000, // 1h
     });
 
-    res.redirect('/tickets'); // Redirection après login
+    res.redirect('/dashboard');  // Redirection après login
   } catch (err) {
     console.error("Erreur serveur lors de la connexion :", err);
     res.render('auth/login', { message: 'Erreur serveur.' });

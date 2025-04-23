@@ -1,54 +1,42 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const helmet = require('helmet');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path');
-const cookieParser = require('cookie-parser');
+// server.js
+const express        = require("express");
+const dotenv         = require("dotenv");
+const path           = require("path");
+const cookieParser   = require('cookie-parser');
 const methodOverride = require('method-override');
 
+// Load .env
 dotenv.config();
+// Connect DB (assumes ./config/db.js exports a function)
+require('./config/db')();
 
-const connectDB = require('./config/db'); // <--- import DB
 const app = express();
 
-
-connectDB();
-
-app.use(cors());
+// Core middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // <-- essentiel pour lire les données de formulaires HTML
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
-// CSP avec Helmet
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-      styleSrc: ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      frameAncestors: ["'none'"],
-      baseUri: ["'self'"]
-    }
-  })
-);
 
-// Dossier public (pour CSS, images, etc.)
-app.use(express.static('public'));
-
-// Config EJS
+// Static & view engine
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Routes
-app.use('/auth', require('./routes/authRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/mailer', require('./routes/mailerRoutes'));
-app.use('/tickets', require('./routes/ticketRoutes'));
+// Make `user` available in all views
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
 
+// === MOUNT ROUTES ===
+app.use('/dashboard', require('./routes/dashboardRoutes'));
+app.use('/auth',      require('./routes/authRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/tickets',   require('./routes/ticketRoutes'));
+
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Serveur démarré sur le port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
