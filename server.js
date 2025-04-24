@@ -34,6 +34,7 @@ app.use('/dashboard', require('./routes/dashboardRoutes'));
 app.use('/auth',      require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/tickets',   require('./routes/ticketRoutes'));
+app.use('/api/mailer', require('./routes/mailerRoutes'));
 
 // Start server
 const PORT = process.env.PORT || 5000;
