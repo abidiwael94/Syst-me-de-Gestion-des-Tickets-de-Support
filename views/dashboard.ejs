@@ -63,8 +63,10 @@
                     : 'Unassigned' %>
             </td>
             <td><%= ticket.createdAt.toLocaleDateString() %></td>
-            <td>           
-                <button><i class="fas fa-edit"></i></button> 
+            <td>
+              <a href="/tickets/edit/<%= ticket._id %>" title="Edit Ticket">
+                <button><i class="fas fa-edit"></i></button>
+              </a>
                 <button onclick="confirmDelete('/tickets/<%= ticket._id %>')">
                     <i class="fas fa-trash"></i>
                 </button>

@@ -1,0 +1,137 @@
+/* General Body Styling */
+body {
+    background: linear-gradient(to right, #e0f7fa, #e1bee7);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.8s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Container Styling */
+  .container {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+  
+  .container:hover {
+    transform: scale(1.01);
+  }
+  
+  /* Header Styling */
+  h1 {
+    text-align: center;
+    color: #6a1b9a;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  
+  /* Form Label */
+  .form-label {
+    font-weight: 600;
+    color: #4a148c;
+  }
+  
+  /* Form Controls */
+  .form-control,
+  .form-select {
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #6a1b9a;
+    box-shadow: 0 0 8px rgba(106, 27, 154, 0.3);
+    outline: none;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: #6a1b9a;
+    border-color: #6a1b9a;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #4a148c;
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    background-color: #9e9e9e;
+    border-color: #9e9e9e;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #757575;
+    transform: translateY(-2px);
+  }
+  
+  /* Icon Buttons Styling */
+  .btn-icon {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #6a1b9a;
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .btn-icon:hover {
+    transform: translateY(-2px);
+    background-color: rgba(106, 27, 154, 0.1);
+  }
+  
+  /* Specific Icon Styles */
+  .btn-edit:hover {
+    color: #4a148c;
+  }
+  
+  .btn-delete {
+    color: #d32f2f;
+  }
+  
+  .btn-delete:hover {
+    color: #b71c1c;
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+  
+  /* Align icons in actions column */
+  .actions-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
