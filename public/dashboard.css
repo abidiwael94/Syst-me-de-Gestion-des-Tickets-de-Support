@@ -1,4 +1,3 @@
-/* ─── Dashboard Overview Cards ─── */
 .overview {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -32,7 +31,6 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* ─── Tables ─── */
 .tables {
   margin-bottom: 40px;
 }
@@ -56,7 +54,7 @@
 .tables td {
   padding: 12px 15px;
   text-align: left;
-  width: 16.6%; /* Ensures all th and td take equal space */
+  width: 16.6%;
 }
 
 .tables thead {
@@ -81,7 +79,6 @@
   color: #333;
 }
 
-/* ─── Action Buttons (Icons) ─── */
 .tables td button {
   background-color: #6a1b9a;
   border: none;
@@ -99,16 +96,14 @@
 }
 
 .tables td button i {
-  font-size: 18px; /* Icon size */
+  font-size: 18px;
 }
 
-/* ─── Action Buttons Styling (Edit/Delete) ─── */
 .tables td a {
   margin-right: 10px;
   text-decoration: none;
 }
 
-/* ─── Responsive Padding & Container ─── */
 body > .container {
   max-width: 1200px;
   padding: 30px;

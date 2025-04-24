@@ -65,11 +65,14 @@ router.put('/:id', auth(['admin']), async (req, res) => {
 // Supprimer un ticket
 router.delete('/:id', auth(['admin']), async (req, res) => {
   try {
-    await Ticket.findByIdAndDelete(req.params.id);
-    res.redirect('/tickets');
+    const deletedTicket = await Ticket.findByIdAndDelete(req.params.id);
+    if (!deletedTicket) {
+      return res.status(404).json({ message: 'Ticket non trouvé' });
+    }
+    res.json({ message: 'Ticket supprimé avec succès' }); // Changed to JSON response
   } catch (err) {
     console.error("Erreur lors de la suppression du ticket :", err);
-    res.status(500).send("Erreur serveur");
+    res.status(500).json({ message: 'Erreur serveur', error: err.message }); // Also JSON
   }
 });
 

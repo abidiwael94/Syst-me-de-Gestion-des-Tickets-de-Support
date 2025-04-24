@@ -65,7 +65,9 @@
             <td><%= ticket.createdAt.toLocaleDateString() %></td>
             <td>           
                 <button><i class="fas fa-edit"></i></button> 
-                <button><i class="fas fa-trash"></i></button>
+                <button onclick="confirmDelete('/tickets/<%= ticket._id %>')">
+                    <i class="fas fa-trash"></i>
+                </button>
             </td>
           </tr>
         <% }) %>
@@ -98,12 +100,41 @@
                          : '–' %></td>
             <td>              
                <button><i class="fas fa-edit"></i></button> 
-               <button><i class="fas fa-trash"></i></button>
+               <button onclick="confirmDelete('/api/users/<%= user._id %>')"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
         <% }) %>
       </tbody>
     </table>
   </section>
+
+  <script>
+    function confirmDelete(url) {  // Removed isTicket parameter
+        const confirmAction = confirm("Are you sure you want to delete this item?");
+        if (confirmAction) {
+            fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            })
+            .then(response => {
+            if (response.ok) {
+                alert("Item deleted successfully!");
+                location.reload();  // Always use the same reload method
+            } else {
+                alert("Error deleting item.");
+            }
+            })
+            .catch(error => {
+            console.error("Error:", error);
+            alert("Error deleting item.");
+            });
+        }
+    }  
+</script>
+  
+  
+
 </body>
 </html>
