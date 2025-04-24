@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Admin Dashboard</title>
+        <link rel="stylesheet" href="dashboard.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    </head>  
+<body>
+  <header>
+    <h1>Admin Dashboard</h1>
+  </header>
+
+  <section class="overview">
+    <div class="card">
+      <h2>Total Users</h2>
+      <p><%= counts.totalUsers %></p>
+    </div>
+    <div class="card">
+      <h2>Total Tickets</h2>
+      <p><%= counts.totalTickets %></p>
+    </div>
+    <div class="card">
+      <h2>Open Tickets</h2>
+      <p><%= counts.status.open %></p>
+    </div>
+    <div class="card">
+      <h2>In Progress</h2>
+      <p><%= counts.status.in_progress %></p>
+    </div>
+    <div class="card">
+      <h2>Closed Tickets</h2>
+      <p><%= counts.status.closed %></p>
+    </div>
+  </section>
+
+  <section class="tables">
+    <h2>All Tickets</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Created By</th>
+          <th>Assigned To</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tickets.forEach(ticket => { %>
+          <tr>
+            <td><%= ticket.title %></td>
+            <td><%= ticket.status %></td>
+            <td>
+              <%= ticket.createdBy
+                    ? ticket.createdBy.name
+                    : 'Unknown' %>
+            </td>
+            <td>
+              <%= ticket.assignedTo
+                    ? ticket.assignedTo.name
+                    : 'Unassigned' %>
+            </td>
+            <td><%= ticket.createdAt.toLocaleDateString() %></td>
+            <td>           
+                <button><i class="fas fa-edit"></i></button> 
+                <button><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="tables">
+    <h2>All Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Role</th>
+          <th>Joined At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(user => { %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.password.length > 30 ? user.password.slice(0, 10) + "..." : user.password %></td>
+            <td><%= user.role %></td>
+            <td><%= user.createdAt
+                         ? user.createdAt.toLocaleDateString()
+                         : '–' %></td>
+            <td>              
+               <button><i class="fas fa-edit"></i></button> 
+               <button><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+</body>
+</html>

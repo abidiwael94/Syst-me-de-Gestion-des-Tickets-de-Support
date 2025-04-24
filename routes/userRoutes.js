@@ -15,9 +15,9 @@ router.get('/', auth(['admin']), async (req, res) => {
 
 
 router.post('/', auth(['admin']), async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, createdAt } = req.body;
   try {
-    const newUser = new User({ name, email, password, role });
+    const newUser = new User({ name, email, password, role, ...(createdAt && { createdAt }) });
     await newUser.save();
     res.status(201).json({ message: 'Utilisateur ajouté avec succès', user: newUser });
   } catch (err) {

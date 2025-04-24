@@ -16,8 +16,20 @@ router.get('/', auth('admin'), async (req, res) => {
     // Prepare counts
     const counts = {
       totalUsers: users.length,
-      totalTickets: tickets.length
+      totalTickets: tickets.length,
+      status: {
+        open: 0,
+        in_progress: 0,
+        closed: 0
+      }
     };
+
+    // Count tickets by status
+    tickets.forEach(ticket => {
+      if (counts.status[ticket.status] !== undefined) {
+        counts.status[ticket.status]++;
+      }
+    });
 
     // Render dashboard.ejs
     res.render('dashboard', { users, tickets, counts });
