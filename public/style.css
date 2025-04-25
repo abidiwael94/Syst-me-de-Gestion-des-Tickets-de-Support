@@ -1,4 +1,3 @@
-/* Global Styles */
 body {
   background: linear-gradient(to right, #e0f7fa, #e1bee7);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,7 +10,6 @@ body {
   animation: fadeIn 1s ease-in;
 }
 
-/* Fade-in Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -23,7 +21,6 @@ body {
   }
 }
 
-/* Container */
 .container {
   background-color: #ffffff;
   padding: 50px 40px;
@@ -38,7 +35,6 @@ body {
   transform: scale(1.01);
 }
 
-/* Title */
 h2 {
   text-align: center;
   color: #6a1b9a;
@@ -47,7 +43,6 @@ h2 {
   font-weight: 700;
 }
 
-/* Form Elements */
 .form-label {
   font-weight: 600;
   color: #4a148c;
@@ -71,7 +66,6 @@ h2 {
   outline: none;
 }
 
-/* Button */
 .btn-primary {
   background-color: #6a1b9a;
   border-color: #6a1b9a;
@@ -89,7 +83,6 @@ h2 {
   transform: translateY(-2px);
 }
 
-/* Alert Message */
 .alert {
   text-align: center;
   font-size: 15px;
@@ -97,7 +90,6 @@ h2 {
   padding: 10px 15px;
 }
 
-/* Footer Link */
 p {
   text-align: center;
   margin-top: 25px;
@@ -116,7 +108,6 @@ a:hover {
   color: #4a148c;
 }
 
-/* Form Layout Utility */
 .form-row {
   display: flex;
   gap: 20px;

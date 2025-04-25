@@ -4,17 +4,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Affiche la page d'inscription
 router.get('/register', (req, res) => {
   res.render('auth/register', { message: null });
 });
 
-// Affiche la page de connexion
 router.get('/login', (req, res) => {
   res.render('auth/login', { message: null });
 });
 
-// Gère l'inscription
 router.post('/register', async (req, res) => {
   const { name, email, password, role } = req.body;
 
@@ -35,7 +32,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Gère la connexion
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -51,13 +47,12 @@ router.post('/login', async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    // Stocke le token dans un cookie
     res.cookie('auth_token', token, {
       httpOnly: true,
-      maxAge: 3600000, // 1h
+      maxAge: 3600000,
     });
 
-    res.redirect('/dashboard');  // Redirection après login
+    res.redirect('/dashboard');
   } catch (err) {
     console.error("Erreur serveur lors de la connexion :", err);
     res.render('auth/login', { message: 'Erreur serveur.' });

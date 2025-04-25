@@ -1,4 +1,3 @@
-/* General Body Styling */
 body {
     background: linear-gradient(to right, #e0f7fa, #e1bee7);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,7 +15,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
   }
   
-  /* Container Styling */
   .container {
     background-color: #ffffff;
     padding: 40px 30px;
@@ -31,7 +29,6 @@ body {
     transform: scale(1.01);
   }
   
-  /* Header Styling */
   h1 {
     text-align: center;
     color: #6a1b9a;
@@ -40,13 +37,11 @@ body {
     font-weight: 700;
   }
   
-  /* Form Label */
   .form-label {
     font-weight: 600;
     color: #4a148c;
   }
   
-  /* Form Controls */
   .form-control,
   .form-select {
     border-radius: 10px;
@@ -64,7 +59,6 @@ body {
     outline: none;
   }
   
-  /* Buttons */
   .btn-primary {
     background-color: #6a1b9a;
     border-color: #6a1b9a;
@@ -96,7 +90,6 @@ body {
     transform: translateY(-2px);
   }
   
-  /* Icon Buttons Styling */
   .btn-icon {
     background: none;
     border: none;
@@ -114,7 +107,6 @@ body {
     background-color: rgba(106, 27, 154, 0.1);
   }
   
-  /* Specific Icon Styles */
   .btn-edit:hover {
     color: #4a148c;
   }
@@ -128,7 +120,6 @@ body {
     background-color: rgba(211, 47, 47, 0.1);
   }
   
-  /* Align icons in actions column */
   .actions-cell {
     display: flex;
     align-items: center;

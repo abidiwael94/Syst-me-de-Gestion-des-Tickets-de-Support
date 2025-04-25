@@ -4,7 +4,6 @@ const Ticket = require('../models/Ticket');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 
-// Afficher tous les tickets
 router.get('/', auth('admin'), async (req, res) => {
   try {
     console.log("Route /tickets atteinte ✅");
@@ -16,7 +15,6 @@ router.get('/', auth('admin'), async (req, res) => {
   }
 });
 
-// Formulaire pour créer un ticket
 router.get('/new', auth(), async (req, res) => {
   try {
     const users = await User.find();
@@ -27,7 +25,6 @@ router.get('/new', auth(), async (req, res) => {
   }
 });
 
-// Créer un ticket (POST)
 router.post('/', auth(), async (req, res) => {
   try {
     const ticket = new Ticket({ ...req.body, createdBy: req.user.id });
@@ -39,7 +36,6 @@ router.post('/', auth(), async (req, res) => {
   }
 });
 
-// GET Edit Form (passing fromDashboard)
 router.get('/edit/:id', auth(), async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id).populate('assignedTo');
@@ -63,17 +59,16 @@ router.put('/:id', auth(['admin']), async (req, res) => {
   }
 });
 
-// Supprimer un ticket
 router.delete('/:id', auth(['admin']), async (req, res) => {
   try {
     const deletedTicket = await Ticket.findByIdAndDelete(req.params.id);
     if (!deletedTicket) {
       return res.status(404).json({ message: 'Ticket non trouvé' });
     }
-    res.json({ message: 'Ticket supprimé avec succès' }); // Changed to JSON response
+    res.json({ message: 'Ticket supprimé avec succès' });
   } catch (err) {
     console.error("Erreur lors de la suppression du ticket :", err);
-    res.status(500).json({ message: 'Erreur serveur', error: err.message }); // Also JSON
+    res.status(500).json({ message: 'Erreur serveur', error: err.message }); 
   }
 });
 
