@@ -11,8 +11,17 @@
 <body class="p-4 bg-light">
 
   <div class="container">
-    <h1 class="mb-4">Liste des tickets</h1>
-    <a href="/tickets/new" class="btn btn-primary mb-3">Créer un nouveau ticket</a>
+    <h1 class="mb-4">
+      <% if (user && user.role === 'admin') { %>
+        Liste de tous les tickets
+      <% } else { %>
+        Mes tickets
+      <% } %>
+    </h1>
+
+    <% if (user && user.role === 'admin') { %>
+      <a href="/tickets/new" class="btn btn-primary mb-3">Créer un nouveau ticket</a>
+    <% } %>
 
     <table class="table table-bordered table-striped">
       <thead class="table-dark">
@@ -20,44 +29,59 @@
           <th>Titre</th>
           <th>Description</th>
           <th>Statut</th>
-          <th>Créé par</th>
+          <% if (user && user.role === 'admin') { %>
+            <th>Créé par</th>
+          <% } %>
           <th>Assigné à</th>
           <th>Date de création</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% tickets.forEach(ticket => { %>
+        <% if (tickets.length === 0) { %>
           <tr>
-            <td><%= ticket.title %></td>
-            <td><%= ticket.description %></td>
-            <td>
-              <% if (ticket.status === 'open') { %>
-                <span class="badge bg-success">Ouvert</span>
-              <% } else if (ticket.status === 'in_progress') { %>
-                <span class="badge bg-warning text-dark">En cours</span>
-              <% } else { %>
-                <span class="badge bg-secondary">Fermé</span>
-              <% } %>
-            </td>
-            <td><%= ticket.createdBy ? ticket.createdBy.name : 'Inconnu' %></td>
-            <td><%= ticket.assignedTo ? ticket.assignedTo.name : 'Non assigné' %></td>
-            <td><%= ticket.createdAt ? ticket.createdAt.toLocaleDateString() : '-' %></td>
-            <td class="actions-cell">
-              <a href="/tickets/edit/<%= ticket._id %>" class="btn-icon btn-edit" title="Modifier">
-                <i class="fas fa-pen"></i>
-              </a>
-              <form action="/tickets/<%= ticket._id %>?_method=DELETE" method="POST" style="display:inline;">
-                <button type="submit" class="btn-icon btn-delete" title="Supprimer" onclick="return confirm('Confirmer la suppression ?')">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </form>
-            </td>
+            <td colspan="<%= user && user.role === 'admin' ? 7 : 6 %>" class="text-center">Aucun ticket à afficher</td>
           </tr>
-        <% }) %>
+        <% } else { %>
+          <% tickets.forEach(ticket => { %>
+            <tr>
+              <td><%= ticket.title %></td>
+              <td><%= ticket.description %></td>
+              <td>
+                <% if (ticket.status === 'open') { %>
+                  <span class="badge bg-success">Ouvert</span>
+                <% } else if (ticket.status === 'in_progress') { %>
+                  <span class="badge bg-warning text-dark">En cours</span>
+                <% } else { %>
+                  <span class="badge bg-secondary">Fermé</span>
+                <% } %>
+              </td>
+              <% if (user && user.role === 'admin') { %>
+                <td><%= ticket.createdBy ? ticket.createdBy.name : 'Inconnu' %></td>
+              <% } %>
+              <td><%= ticket.assignedTo ? ticket.assignedTo.name : 'Non assigné' %></td>
+              <td><%= ticket.createdAt ? ticket.createdAt.toLocaleDateString() : '-' %></td>
+              <td class="actions-cell">
+                <a href="/tickets/edit/<%= ticket._id %>" class="btn-icon btn-edit" title="Modifier">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <% if (user && user.role === 'admin') { %>
+                  <form action="/tickets/<%= ticket._id %>?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-icon btn-delete" title="Supprimer" onclick="return confirm('Confirmer la suppression ?')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        <% } %>
       </tbody>
     </table>
-    <a href="/dashboard" class="btn btn-secondary mt-3">Retour au tableau de bord</a>
+
+    <% if (user && user.role === 'admin') { %>
+      <a href="/dashboard" class="btn btn-secondary mt-3">Retour au tableau de bord</a>
+    <% } %>
   </div>
 
   <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999;">
@@ -79,7 +103,7 @@
           console.error('Bootstrap non chargé !');
           return;
         }
-        
+
         const toastEl = document.getElementById('emailToast');
         if (toastEl) {
           const toast = new bootstrap.Toast(toastEl, {
@@ -87,7 +111,7 @@
             delay: 5000
           });
           toast.show();
-          
+
           history.replaceState(null, '', window.location.pathname);
         }
       }
