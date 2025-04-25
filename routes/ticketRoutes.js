@@ -3,6 +3,7 @@ const router = express.Router();
 const Ticket = require('../models/Ticket');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
+const axios = require('axios');
 
 router.get('/', auth('admin'), async (req, res) => {
   try {
@@ -40,7 +41,7 @@ router.get('/edit/:id', auth(), async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id).populate('assignedTo');
     const users = await User.find();
-    const fromDashboard = req.query.fromDashboard === 'true'; // Convert string to boolean
+    const fromDashboard = req.query.fromDashboard === 'true';
     res.render('tickets/edit', { ticket, users, fromDashboard });
   } catch (err) {
     console.error("Erreur lors de l'affichage du formulaire d'édition :", err);
@@ -50,8 +51,20 @@ router.get('/edit/:id', auth(), async (req, res) => {
 
 router.put('/:id', auth(['admin']), async (req, res) => {
   try {
-    await Ticket.findByIdAndUpdate(req.params.id, req.body);
+    const oldTicket = await Ticket.findById(req.params.id).populate('assignedTo');
+    const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('assignedTo');
+
     const redirectPath = req.body.fromDashboard === 'true' ? '/dashboard' : '/tickets';
+
+    if (oldTicket.status !== updatedTicket.status && updatedTicket.assignedTo?.email) {
+      await axios.post(`${req.protocol}://${req.get('host')}/api/mailer/send`, {
+        to: updatedTicket.assignedTo.email,
+        subject: `Mise à jour du ticket: ${updatedTicket.title}`,
+        text: `Bonjour ${updatedTicket.assignedTo.name},\n\nLe ticket "${updatedTicket.title}" est maintenant "${updatedTicket.status}".`
+      });
+      return res.redirect(`${redirectPath}?emailSent=true`);
+    }
+
     res.redirect(redirectPath);
   } catch (err) {
     console.error("Erreur lors de la mise à jour du ticket :", err);
