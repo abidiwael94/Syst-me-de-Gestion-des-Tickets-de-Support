@@ -39,23 +39,24 @@ router.post('/', auth(), async (req, res) => {
   }
 });
 
-// Formulaire de modification
+// GET Edit Form (passing fromDashboard)
 router.get('/edit/:id', auth(), async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id).populate('assignedTo');
     const users = await User.find();
-    res.render('tickets/edit', { ticket, users });
+    const fromDashboard = req.query.fromDashboard === 'true'; // Convert string to boolean
+    res.render('tickets/edit', { ticket, users, fromDashboard });
   } catch (err) {
     console.error("Erreur lors de l'affichage du formulaire d'édition :", err);
     res.status(500).send("Erreur serveur");
   }
 });
 
-// Modifier un ticket (PUT)
 router.put('/:id', auth(['admin']), async (req, res) => {
   try {
     await Ticket.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect('/tickets');
+    const redirectPath = req.body.fromDashboard === 'true' ? '/dashboard' : '/tickets';
+    res.redirect(redirectPath);
   } catch (err) {
     console.error("Erreur lors de la mise à jour du ticket :", err);
     res.status(500).send("Erreur serveur");

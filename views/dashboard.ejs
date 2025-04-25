@@ -64,7 +64,8 @@
             </td>
             <td><%= ticket.createdAt.toLocaleDateString() %></td>
             <td>
-              <a href="/tickets/edit/<%= ticket._id %>" title="Edit Ticket">
+             <!-- Dashboard Edit Link (passes fromDashboard=true) -->
+              <a href="/tickets/edit/<%= ticket._id %>?fromDashboard=true" title="Edit Ticket">
                 <button><i class="fas fa-edit"></i></button>
               </a>
                 <button onclick="confirmDelete('/tickets/<%= ticket._id %>')">

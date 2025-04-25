@@ -11,6 +11,8 @@
 
     <!-- Le formulaire utilise _method=PUT -->
     <form action="/tickets/<%= ticket._id %>?_method=PUT" method="POST">
+      <!-- Add this hidden input to track if the edit came from the dashboard -->
+      <input type="hidden" name="fromDashboard" value="<%= fromDashboard %>">
 
       <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
