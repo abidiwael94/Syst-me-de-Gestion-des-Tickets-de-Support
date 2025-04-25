@@ -5,7 +5,7 @@ const User = require('../models/User');
 const auth = require('../middleware/auth');
 const axios = require('axios');
 
-router.get('/', auth('admin'), async (req, res) => {
+router.get('/', auth(), async (req, res) => {
   try {
     console.log("Route /tickets atteinte ✅");
     const tickets = await Ticket.find().populate('createdBy assignedTo');
@@ -49,7 +49,7 @@ router.get('/edit/:id', auth(), async (req, res) => {
   }
 });
 
-router.put('/:id', auth(['admin']), async (req, res) => {
+router.put('/:id', auth(), async (req, res) => {
   try {
     const oldTicket = await Ticket.findById(req.params.id).populate('assignedTo');
     const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('assignedTo');
@@ -72,7 +72,7 @@ router.put('/:id', auth(['admin']), async (req, res) => {
   }
 });
 
-router.delete('/:id', auth(['admin']), async (req, res) => {
+router.delete('/:id', auth(), async (req, res) => {
   try {
     const deletedTicket = await Ticket.findByIdAndDelete(req.params.id);
     if (!deletedTicket) {

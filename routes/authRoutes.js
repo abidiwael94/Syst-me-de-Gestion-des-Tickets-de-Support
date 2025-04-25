@@ -52,14 +52,18 @@ router.post('/login', async (req, res) => {
       maxAge: 3600000,
     });
 
-    res.redirect('/dashboard');
+    if (user.role === 'admin') {
+      res.redirect('/dashboard');
+    } else {
+      res.redirect('/tickets');
+    }
+
   } catch (err) {
     console.error("Erreur serveur lors de la connexion :", err);
     res.render('auth/login', { message: 'Erreur serveur.' });
   }
 });
 
-// Déconnexion (facultatif)
 router.get('/logout', (req, res) => {
   res.clearCookie('auth_token');
   res.redirect('/auth/login');
