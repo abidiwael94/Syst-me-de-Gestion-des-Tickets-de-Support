@@ -75,7 +75,6 @@
             </td>
             <td><%= ticket.createdAt.toLocaleDateString() %></td>
             <td>
-             <!-- Dashboard Edit Link (passes fromDashboard=true) -->
               <a href="/tickets/edit/<%= ticket._id %>?fromDashboard=true" title="Edit Ticket">
                 <button><i class="fas fa-edit"></i></button>
               </a>
@@ -92,7 +91,7 @@
   <section class="tables">
     <div class="d-flex align-items-center mb-3">
       <h2 class="m-0">All Users</h2>
-      <a href="/users/new" title="Create New Ticket" class="ms-2">
+      <a href="/api/users/new" title="Create New Ticket" class="ms-2">
         <button class="btn btn-sm" style="background-color: #6a1b9a; color: white;">
           <i class="fas fa-plus"></i>
         </button>
@@ -120,7 +119,9 @@
                          ? user.createdAt.toLocaleDateString()
                          : '–' %></td>
             <td>              
-               <button><i class="fas fa-edit"></i></button> 
+               <a href="/api/users/editUser/<%= user._id %>?fromDashboard=true" title="Edit Ticket">
+                <button><i class="fas fa-edit"></i></button>
+              </a>
                <button onclick="confirmDelete('/api/users/<%= user._id %>')"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
