@@ -173,12 +173,7 @@
             },
             })
             .then(response => {
-            if (response.ok) {
-                alert("Item deleted successfully!");
-                location.reload();
-            } else {
-                alert("Error deleting item.");
-            }
+              location.reload();
             })
             .catch(error => {
             console.error("Error:", error);

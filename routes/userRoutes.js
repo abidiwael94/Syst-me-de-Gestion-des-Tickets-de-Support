@@ -34,7 +34,7 @@ router.post('/', auth(['admin']), async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashedPassword, role });
     await newUser.save();
-    res.redirect('/users');
+    res.redirect('/api/users');
   } catch (err) {
     console.error(err);
     res.status(400).send("Erreur lors de la création de l'utilisateur");
@@ -65,7 +65,7 @@ router.post('/editUser/:id', auth(['admin']), async (req, res) => {
     }
 
     await User.findByIdAndUpdate(req.params.id, updateFields);
-    res.redirect('/users');
+    res.redirect('/api/users');
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur serveur");
@@ -79,7 +79,7 @@ router.delete('/:id', auth(['admin']), async (req, res) => {
     if (!deletedUser) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
-    res.json({ message: 'Utilisateur supprimé avec succès' });
+     res.redirect('/api/users');
   } catch (err) {
     res.status(500).json({ message: 'Erreur lors de la suppression', error: err.message });
   }

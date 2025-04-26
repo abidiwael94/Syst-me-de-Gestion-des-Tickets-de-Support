@@ -42,6 +42,18 @@ router.post('/', auth(), async (req, res) => {
   try {
     const ticket = new Ticket({ ...req.body, createdBy: req.user.id });
     await ticket.save();
+
+    // Populate assignedTo to get the email
+    await ticket.populate('assignedTo');
+
+    if (ticket.assignedTo?.email) {
+      await axios.post(`${req.protocol}://${req.get('host')}/api/mailer/send`, {
+        to: ticket.assignedTo.email,
+        subject: `Nouveau ticket assigné: ${ticket.title}`,
+        text: `Bonjour ${ticket.assignedTo.name},\n\nUn nouveau ticket "${ticket.title}" vous a été assigné.`
+      });
+    }
+
     res.redirect('/tickets');
   } catch (err) {
     console.error("Erreur lors de la création du ticket :", err);
@@ -49,7 +61,6 @@ router.post('/', auth(), async (req, res) => {
   }
 });
 
-// Affichage du formulaire d'édition d'un ticket
 router.get('/edit/:id', auth(), async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id).populate('assignedTo');
@@ -62,17 +73,22 @@ router.get('/edit/:id', auth(), async (req, res) => {
   }
 });
 
-// Mise à jour d'un ticket
+
 router.put('/:id', auth(), async (req, res) => {
   try {
-    const oldTicket = await Ticket.findById(req.params.id).populate('assignedTo');
-    const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('assignedTo');
+    const oldTicket = await Ticket.findById(req.params.id).populate('assignedTo createdBy');
+    const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('assignedTo createdBy');
 
     const redirectPath = req.body.fromDashboard === 'true' ? '/dashboard' : '/tickets';
 
     if (oldTicket.status !== updatedTicket.status && updatedTicket.assignedTo?.email) {
       await axios.post(`${req.protocol}://${req.get('host')}/api/mailer/send`, {
         to: updatedTicket.assignedTo.email,
+        subject: `Mise à jour du ticket: ${updatedTicket.title}`,
+        text: `Bonjour ${updatedTicket.assignedTo.name},\n\nLe ticket "${updatedTicket.title}" est maintenant "${updatedTicket.status}".`
+      });
+      await axios.post(`${req.protocol}://${req.get('host')}/api/mailer/send`, {
+        to: updatedTicket.createdBy.email,
         subject: `Mise à jour du ticket: ${updatedTicket.title}`,
         text: `Bonjour ${updatedTicket.assignedTo.name},\n\nLe ticket "${updatedTicket.title}" est maintenant "${updatedTicket.status}".`
       });
