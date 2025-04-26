@@ -96,7 +96,7 @@ router.delete('/:id', auth(), async (req, res) => {
     res.json({ message: 'Ticket supprimé avec succès' });
   } catch (err) {
     console.error("Erreur lors de la suppression du ticket :", err);
-    res.status(500).json({ message: 'Erreur serveur', error: err.message }); 
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 });
 
